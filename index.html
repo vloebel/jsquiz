@@ -7,10 +7,10 @@
     <title>JS Quiz</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
-  <body>
+  <body >
     <header>
       <h1>JavaScript Coding Challenge</h1>
-      <div class="status-bar">
+      <div class="status-bar" class="game-panel">
         <!-- high score and initials -->
         <div class='high-score'>
           <p><strong>High Score:</strong> <span id="high-score-initials"> </span> 
@@ -24,7 +24,7 @@
       </div> <!--status bar-->
     </header>
 
-    <main class="card">
+    <main class="card" class="game-panel">
       <div class="card-header">
         <p><span id="start-prompt">Click Start to Begin Quiz</span></p>
       </div>
@@ -36,7 +36,7 @@
       </div> <!--card-body-->
     </main>
 
-    <footer class="card-footer">
+    <footer class="card-footer" class="game-panel">
       <button id="start-btn" class="btn">Start</button>
       <hr/>
       <p><span id="right-or-wrong">You are right or wrong</span></p>
