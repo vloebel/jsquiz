@@ -1,10 +1,9 @@
 var startBtnEl = document.querySelector('#start-btn');
-
-var timeLeft = 30; // 30 seconds to take quiz
-const timePenalty = 10; // 10 seconds penalty for wrong answer
-
+const TIMEPENALTY = 5; // penalty in seconds for wrong answer
+var timeLeft = 30; // total seconds for quiz
 var user = { initials: 'vl', score: 999 };
 var currentScore = 0;
+var gameOver = false;
 
 // questions are in quiz-question.js
 // each question is an object in an array
@@ -43,49 +42,64 @@ var currentScore = 0;
 // end loop through questions
 
 
-function countdown(timeLeft) {
-  
-
-  // TODO: Use the `setInterval()` method to call a function 
-  // to be executed every 1000 milliseconds (to tick down currentClock)
-  // 
+function countdown() {
+  var penalty = false;
  
-  var timeInterval = setInterval(function () {
+  var timerEl = document.querySelector('#time-left');   
+
+  var gameClock = setInterval(function () {
+    timerEl.textContent = ' ' + timeLeft;
+    timeLeft--;
+    // timeLeft -= (penalty ? (TIMEPENALTY + 1) : 1);
+    // set flag if we've run out of time
+    // otherwise update clock on screen
+    if (timeLeft <= 0) {
+      gameOver = true;
+      clearInterval(gameClock);
+      console.log('timeLeft ran out');
+    }
+   }, 1000);
   
-    if (timeLeft) {
-      timerEl.textContent = 'Time remaining: ' + timeLeft + ' second' + (timeLeft == 1 ? '!' : 's');
-      timeLeft--;
-    }
-    else {
-      timerEl.textContent = 'K A B O O M';
-      //  stop the timer
-      clearInterval(timeInterval);
-      // display has to go here or it will run before the clock
-      displayMessage ();
-    }
-  }, 1000);
+    // rungame();
+
 }
+
+function rungame() {
+/*This code is supposed to run while the clock ticks */
+/* and end when it hits 0 and sets gameOver to true */
+  
+  var killSwitch = 0;
+  var loopmore = true;
+  while (loopmore) {
+    loopmore = !gameOver;
+    console.log('rungame: time-remaining ' + timeLeft);
+    if (killSwitch++ > 100) console.log('rungame killed');
+  }
+console.log('rungame OVER');
+}
+
 
 //******** LISTEN FOR START ************** */
 
-var startPromptEl = document.querySelector('#start-prompt');
-var nextQuestionEL = document.querySelector('#next-question');
 
 // run the game in a loop
 
-  startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
- 
-startBtnEl.addEventListener("click", function () {
-  
-  nextQuestionEL.textContent = qArr[0].q;
+var startPromptEl = document.querySelector('#start-prompt');
+var nextQuestionEL = document.querySelector('#next-question');
+var deductPenalty = false; /* set true for wrong answer */
+
+startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
+startBtnEl.addEventListener("click", countdown);
 
 
-    // Run the game
+
+
     // Output the score
+  
     //  nextQuestionEL.textContent = (`Your score was ${currentScore}`);
+  
     // ask for initials
-  });
-
+ 
 
 
 
