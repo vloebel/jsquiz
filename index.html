@@ -4,33 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Generate Password</title>
-    <link rel="stylesheet" href="./Assets/css/style.css" />
+    <title>JS Quiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Generate Password</h1>
-      </header>
-      <div class="card">
-        <div class="card-header">
-          <h2>Generate a password</h2>
+    <header>
+      <h1>JavaScript Coding Challenge</h1>
+      <div class="status-bar">
+        <!-- high score and initials -->
+        <div class='high-score'>
+          <p><strong>High Score:</strong> <span id="high-score-initials"> </span> 
+            ' - ' 
+            <span id="high-score"></span></p>
         </div>
-        <!-- ARIA semantics expose extra information to a browser's accessibility API, and do not affect a page's DOM. -->
-        <div class="card-body">
-          <textarea
-          readonly
-          id="password"
-          placeholder="Your Password"
-            aria-label="Generated Password"
-            
-          >Password must be between 8-128 characters.</textarea>
+        <!-- time left on clock-->
+        <div class='timer'>
+          <p><strong>Time Left:</strong> <span id="time-left"></span></p>
         </div>
-        <div class="card-footer">
-          <button id="generate" class="btn">Generate Password</button>
-        </div>
+      </div> <!--status bar-->
+    </header>
+
+    <main class="card">
+      <div class="card-header">
+        <h2>Click Start to Begin Timed Quiz</h2>
       </div>
-    </div>
+      <div class="card-body">
+      <!-- run the quiz-->
+
+      </div>
+    </main>
+
+    <footer class="card-footer">
+      <button id="start-btn" class="btn">Start</button>
+      <hr/>
+      <p><span id="right-or-wrong">You are right or wrong</span></p>
+    </footer>
+        
     <script src="./Assets/js/script.js"></script>
   </body>
+
+
 </html>
