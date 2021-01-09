@@ -1,8 +1,9 @@
-var startBtnEl = document.querySelector('#start-btn');
+
 const TIMEPENALTY = 5; // penalty in seconds for wrong answer
-var timeLeft = 30; // total seconds for quiz
-var user = { initials: 'vl', score: 999 };
-var currentScore = 0;
+var penalty = false; // penalty flag 
+var user = { initials: '', score: 0 };
+
+var timeLeft = 8; // countdown varible
 var gameOver = false;
 
 // questions are in quiz-question.js
@@ -42,15 +43,17 @@ var gameOver = false;
 // end loop through questions
 
 
-function countdown() {
-  var penalty = false;
+function startGame() {
  
-  var timerEl = document.querySelector('#time-left');   
-
   var gameClock = setInterval(function () {
     timerEl.textContent = ' ' + timeLeft;
-    timeLeft--;
-    // timeLeft -= (penalty ? (TIMEPENALTY + 1) : 1);
+    console.log('time left: ' + timeLeft);
+    //if global penalty is set, subtract extra time
+    --timeLeft;
+    if (penalty) {
+      timeLeft -= TIMEPENALTY;
+      penalty = false;
+    }
     // set flag if we've run out of time
     // otherwise update clock on screen
     if (timeLeft <= 0) {
@@ -58,38 +61,35 @@ function countdown() {
       clearInterval(gameClock);
       console.log('timeLeft ran out');
     }
-   }, 1000);
+}, 1000);
   
-    // rungame();
+  runGame();
 
-}
+} 
 
-function rungame() {
+function runGame() {
 /*This code is supposed to run while the clock ticks */
-/* and end when it hits 0 and sets gameOver to true */
-  
-  var killSwitch = 0;
-  var loopmore = true;
-  while (loopmore) {
-    loopmore = !gameOver;
-    console.log('rungame: time-remaining ' + timeLeft);
-    if (killSwitch++ > 100) console.log('rungame killed');
-  }
+
+  var i = 0; 
+for (i; i < 10; i++) console.log('i = ' + i);
+
 console.log('rungame OVER');
 }
 
 
+//******** ATTACH HTML ELEMENTS ************** */
+// buttons
+var startBtnEl = document.querySelector('#start-btn');
+// text spans
+var timerEl = document.querySelector('#timeleft');
+var startPromptEl = document.querySelector('#start-prompt');
+// var nextQuestionEL = document.querySelector('#next-question');
+
 //******** LISTEN FOR START ************** */
 
-
-// run the game in a loop
-
-var startPromptEl = document.querySelector('#start-prompt');
-var nextQuestionEL = document.querySelector('#next-question');
-var deductPenalty = false; /* set true for wrong answer */
-
 startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
-startBtnEl.addEventListener("click", countdown);
+
+startBtnEl.addEventListener("click", startGame);
 
 
 
