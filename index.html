@@ -26,12 +26,14 @@
 
     <main class="card">
       <div class="card-header">
-        <h2>Click Start to Begin Timed Quiz</h2>
+        <p><span id="start-prompt">Click Start to Begin Quiz</span></p>
       </div>
       <div class="card-body">
-      <!-- run the quiz-->
-
-      </div>
+        <div class="question">
+          <p><span id="next-question">default text</span></p>
+          <!--answers will be appended here-->
+        </div> <!--question-->
+      </div> <!--card-body-->
     </main>
 
     <footer class="card-footer">
@@ -39,7 +41,8 @@
       <hr/>
       <p><span id="right-or-wrong">You are right or wrong</span></p>
     </footer>
-        
+     
+    <script src="./Assets/js/quiz-questions.js"></script>
     <script src="./Assets/js/script.js"></script>
   </body>
 
