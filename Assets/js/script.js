@@ -78,7 +78,29 @@ function startGame() {
 // if wrong, set penalty flag to deduct time from clock
 // if time is not up, advance to next question
 
+//****************************************
+// FUNCTION configureButton (buttonElement) 
+// adds uniform style to the argument button
+// and attaches an event listener
+// TODO - improve style or attach css class?
+//**************************************** 
+function configureButton(elem){
+  elem.setAttribute('style',
+    'display:block; color: blue; margin: auto; text-align: center;'
+  );
+  elem.addEventListener("click", function() {                          
+    elem.textContent='kick me';
+  });
+}
 
+//****************************************
+// FUNCTION buildQuestion (index) 
+// Accepts the index to an array of question objects
+// Places each of the four answer strings on a button
+// calls configureButon to style button and 
+// attach an event listener
+// and then appends them to the card-body div
+//**************************************** 
 function buildQuestion(j) {
   
   var answerDivEl = document.querySelector('#cardbody');
@@ -89,19 +111,39 @@ function buildQuestion(j) {
   startPromptEl.textContent = qArr[j].q;
   console.log('startPromptEl.textContent is ' + startPromptEl.textContent);
 
-  // create and append answer buttons
+  // create answer buttons
+  // call configureButton to style the buttons
+  // and attach event listeners
+  // I'm sure it can be done more compactly, but....
   var aEl = document.createElement('button');
   aEl.textContent = qArr[j].a;
-  console.log('aEl = '+ aEl.textContent);
+  configureButton(aEl);
+  
   var bEl = document.createElement('button');
   bEl.textContent = qArr[j].b;
+  configureButton(bEl);
+
   var cEl = document.createElement('button');
   cEl.textContent = qArr[j].c;
+  configureButton(cEl);
+
   var dEl = document.createElement('button');
   dEl.textContent = qArr[j].d;
-// append the buttons to the display
+  configureButton(dEl);
+
+// append the answer buttons to the display
+  answerDivEl.append(aEl, bEl, cEl, dEl);
   
-  answerDivEl.append (aEl, bEl, cEl, dEl);
+// attach event listener to the buttons
+
+
+
+
+
+
+
+
+
 }
 
 function runGame() {
