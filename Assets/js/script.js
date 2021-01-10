@@ -89,67 +89,66 @@ function configureButton(elem){
     'display:block; color: blue; margin: auto; text-align: center;'
   );
   elem.addEventListener("click", function() {                          
-    elem.textContent='kick me';
+    elem.textContent = elem.id;
+    
   });
 }
 
 //****************************************
-// FUNCTION buildQuestion (index) 
+// FUNCTION nextQuestion (index) 
 // Accepts the index to an array of question objects
 // Places each of the four answer strings on a button
 // calls configureButon to style button and 
 // attach an event listener
 // and then appends them to the card-body div
 //**************************************** 
-function buildQuestion(j) {
+function nextQuestion(j) {
   
-  var answerDivEl = document.querySelector('#cardbody');
+  var answerDivEl = document.querySelector('#answerdiv');
 
   console.log('answerDivEl = ' + answerDivEl);
 
   // display the question
   startPromptEl.textContent = qArr[j].q;
-  console.log('startPromptEl.textContent is ' + startPromptEl.textContent);
 
-  // create answer buttons
+  // create a button for each of 4 answers
   // call configureButton to style the buttons
   // and attach event listeners
-  // I'm sure it can be done more compactly, but....
-  var aEl = document.createElement('button');
-  aEl.textContent = qArr[j].a;
-  configureButton(aEl);
+  // TBD? This might be possible in a single
+  // loop using template literals? for another day...
+  var opt1El = document.createElement('button');
+  opt1El.textContent = qArr[j].opt1; 
+  opt1El.id = '1';
+  configureButton(opt1El);
   
-  var bEl = document.createElement('button');
-  bEl.textContent = qArr[j].b;
-  configureButton(bEl);
+  var opt2El = document.createElement('button');
+  opt2El.textContent = qArr[j].opt2;
+  opt2El.id = '2';
+  configureButton(opt2El);
 
-  var cEl = document.createElement('button');
-  cEl.textContent = qArr[j].c;
-  configureButton(cEl);
+  var opt3El = document.createElement('button');
+  opt3El.textContent = qArr[j].opt3;
+  opt3El.id = '3';
+  configureButton(opt3El);
 
-  var dEl = document.createElement('button');
-  dEl.textContent = qArr[j].d;
-  configureButton(dEl);
+  var opt4El = document.createElement('button');
+  opt4El.textContent = qArr[j].opt4;
+  opt4El.id = '4';
+  configureButton(opt4El);
 
-// append the answer buttons to the display
-  answerDivEl.append(aEl, bEl, cEl, dEl);
+// append the answer buttons to the answer Div
+  answerDivEl.append(opt1El, opt2El, opt3El, opt4El);
   
-// attach event listener to the buttons
-
-
-
-
-
-
-
-
 
 }
 
+//**********************************
+// FUNCTION runGame()
+// builds 
 function runGame() {
   //build the next question 
   var i = 0;
-  buildQuestion(i);
+  nextQuestion(i);
 }
 
 

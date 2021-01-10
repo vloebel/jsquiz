@@ -4,40 +4,40 @@
 const qArr = [
   {
     q: 'Where is JavaScript code placed?',
-    a: 'inside the html <head> element',
-    b: 'inside the html <body> element',
-    c: 'Inside a <script> tag',
-    d: 'In a file named \'script\'',
-    ans: 'c'
+    opt1: 'inside the html <head> element',
+    opt2: 'inside the html <body> element',
+    opt3: 'Inside a <script> tag',
+    opt4: 'In a file named \'script\'',
+    solution: 3
   },
   { q: 'What is the result of the following code: \n return(is_string("Type me"))',
-    a: 'Console output\: "Type me"',
-    b: 'True',
-    c: 'Boolean',
-    d: 'Syntax error',
-    ans: 'b'
+    opt1: 'Console output\: "Type me"',
+    opt2: 'True',
+    opt3: 'Boolean',
+    opt4: 'Syntax error',
+    solution: 2
   },
   
   { q: 'Assuming min < max, how do you generate a random integer between min and max (inclusive)',
-    a: 'Math.floor(Math.random() * (max - min + 1) + min);',
-    b: 'Math.floor(Math.random() * (max - min) + min);',
-    c: 'Math.floor(Math.random() * (min - max) + 1);',
-    d: 'Math.floor(Math.random() * (max) + min);',
-    ans: 'a'
+    opt1: 'Math.floor(Math.random() * (max - min + 1) + min);',
+    opt2: 'Math.floor(Math.random() * (max - min) + min);',
+    opt3: 'Math.floor(Math.random() * (min - max) + 1);',
+    opt4: 'Math.floor(Math.random() * (max) + min);',
+    solution: 1
   },
 
   { q: 'How do you access the last element in an array?',
-    a: 'array.last',
-    b: 'array[length]',
-    c: 'array[array.length]',
-    d: 'array[array.length-1]',
-    ans: 'd'
+    opt1: 'array.last',
+    opt2: 'array[length]',
+    opt3: 'array[array.length]',
+    opt4: 'array[array.length-1]',
+    ans: 4
 },
 { q: 'Which of the following is not a valid test?))',
-    a: 'if !Null',
-    b: 'if (apples & oranges)',
-    c: 'if (!True)',
-    d: 'if (a = b)',
-    ans: 'b'
+    opt1: 'if !Null',
+    opt2: 'if (apples & oranges)',
+    opt3: 'if (!True)',
+    opt4: 'if (a = b)',
+    solution: 2
   }]
 
