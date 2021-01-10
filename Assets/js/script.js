@@ -89,30 +89,33 @@ function startGame() {
 // FUNCTION configureButton (buttonElement) 
 // adds uniform style to the argument button
 // and attaches an event listener
-// TODO - improve style or attach css class?
+// WHEN one of the buttons is clicked
+// 
 //**************************************** 
+
+
 function configureButton(elem){
   elem.setAttribute('style',
     'display:block; color: black; margin: auto; text-align: center;'
   );
+
   elem.addEventListener("click", function() {                          
     if (elem.id == correctAnswer) {
-      answerFeedbackEl.textContent = 'Correct! Current score: ' + (++user.score);
+      ++user.score;
+      answerFeedbackEl.textContent = 'Correct! Current score: ' + user.score;
       elem.setAttribute('style',
-    'display:block; color: blue;background:yellow; margin: auto; text-align: center;'
-    );
-     
-    }
-    else {
+        'display:block; color: blue;background:yellow; margin: auto; text-align: center;'
+      );
+    } else {
+      penalty = true;
       answerFeedbackEl.textContent = 'Sorry, wrong. Current score: ' + user.score;
       elem.setAttribute('style',
       'display:block; color: red;  margin: auto; text-align: center;'
       );
     }
-    return; // escape from event listener?
-       
-  });
-}
+    
+  });  //addEventListener
+} // configure button
 
 //****************************************
 // FUNCTION nextQuestion (index) 
@@ -120,92 +123,136 @@ function configureButton(elem){
 // Places each of the four answer strings on a button
 // calls configureButon to style button and 
 // attach an event listener
-// and then appends them to the card-body div
+// and then appends them to the DOM
 //**************************************** 
 function nextQuestion(j) {
   
   var answerDivEl = document.querySelector('#answerdiv');
   correctAnswer = qArr[j].solution;
-  console.log('answerDivEl = ' + answerDivEl);
 
   // display the question
-  startPromptEl.textContent = qArr[j].q;
+  mainPromptEl.textContent = qArr[j].q;
 
-  // create a button for each of 4 answers
+  // attach question to each button
   // call configureButton to style the buttons
-  // and attach event listeners
-  // TBD? Don't need to create new buttons each time...
-  var opt1El = document.createElement('button');
+  // and wait for click
+  
   opt1El.textContent = qArr[j].opt1; 
-  opt1El.id = '1';
   configureButton(opt1El);
   
-  var opt2El = document.createElement('button');
   opt2El.textContent = qArr[j].opt2;
-  opt2El.id = '2';
   configureButton(opt2El);
 
-  var opt3El = document.createElement('button');
   opt3El.textContent = qArr[j].opt3;
-  opt3El.id = '3';
   configureButton(opt3El);
 
-  var opt4El = document.createElement('button');
   opt4El.textContent = qArr[j].opt4;
-  opt4El.id = '4';
   configureButton(opt4El);
 
-// append the answer buttons to the answer Div
+// Display question buttons in answer Div
   answerDivEl.append(opt1El, opt2El, opt3El, opt4El);
-  
+
+
+//Remove event listeners here? test with button 1
+opt1El.removeEventListener("click", function () {
+  console.log('removing event listner from button ' + opt1El.id);
+
+}); //removeEventListener from button that was clicked
 
 }
 
 //**********************************
+//FUNCTION getSavedScore
+//retrieves saved user initials and score
+// from local storage (if any)
+// and displays
+//**********************************
+function getSavedScore (){
+  user.initials = localStorage.getItem("user-initials", initials);
+  user.score = localStorage.getItem("user-score", score);
+  if (!user.initials || !user.score)
+    return; 
+  savedScoreEl.textContent = `${user.initials} + ${user.score}`;
+  console.log('saved score:' + savedScoreEl.textContent);
+}
+  
+function saveScore() {
+   
+  user.score = currentScore.toString; // xxxxxx whatever it's called
+  // Get the user input
+  // for debug we will assign this ANON
+  // user.initials = document.querySelector('#user-initialsxxx').value;
+
+  user.initials = 'ANON';
+  localStorage.setItem("user-initials", user.initials);
+  localStorage.setItem("user-score", user.score);
+
+
+}
+ 
+//*************************** */
 // FUNCTION runGame()
 // builds the questions
 function runGame() {
   // remove the start button
   startBtnEl.remove();
-  //build the next question 
-  for (var i = 0; i < qArr.length; i++) {
-    
+  // TO DO retrieve LAST saved score and initials 
+  // from local storage and display on screen
+
+
+  //ask the next question 
+  for (var i = 0; i < 1; i++) {
     nextQuestion(i);
+    console.log('Back in the for loop');
 
   }
   
+ 
 }
 
 
 
 
 
+// ***********************************************
+// *********** PAGE LOAD 
+//************************************************
 
-//******** ATTACH HTML ELEMENTS ************** */
-// buttons
+// Attach start button
 var startBtnEl = document.querySelector('#start-btn');
-// text spans
+
+// attach text spans
+var savedScoreEl = document.querySelector('#savedscore');
 var timerEl = document.querySelector('#timeleft');
-var startPromptEl = document.querySelector('#start-prompt');
+var mainPromptEl = document.querySelector('#start-prompt');
 var answerFeedbackEl = document.querySelector('#feedback');
 
+// Create answer buttons for quiz but don't display yet
+var opt1El = document.createElement('button');
+var opt2El = document.createElement('button');
+var opt3El = document.createElement('button');
+var opt4El = document.createElement('button');
 
-// retrieve LAST high score and initials and display on screen
+//questions will appear on buttons
+// Button id indicates which answer is picked
+opt1El.id = '1';
+opt2El.id = '2';
+opt3El.id = '3';
+opt4El.id = '4';
+
+
+
+
 
 //******** LISTEN FOR START ************** */
 
-startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
+mainPromptEl.textContent = 'Click Start to Begin Timed Quiz';
 answerFeedbackEl.textContent = '';
 startBtnEl.addEventListener("click", function () {
-  // remove the start button
   startGame()
 });
 
-// Game is over:
-// Notify user of score and ask if they want to save
-// save user initials and score to local storage
-
-
+// anything else here will run before the quiz, so....
  
 
 
