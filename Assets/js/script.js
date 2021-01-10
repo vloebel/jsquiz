@@ -3,6 +3,9 @@ const TIMEPENALTY = 5; // penalty in seconds for wrong answer
 var penalty = false; // penalty flag 
 var user = { initials: '', score: 0 };
 
+//button number of correct answer for current question
+var correctAnswer=''; 
+
 var timeLeft = 5; // countdown varible
 var gameOver = false;
 
@@ -86,11 +89,24 @@ function startGame() {
 //**************************************** 
 function configureButton(elem){
   elem.setAttribute('style',
-    'display:block; color: blue; margin: auto; text-align: center;'
+    'display:block; color: black; margin: auto; text-align: center;'
   );
   elem.addEventListener("click", function() {                          
-    elem.textContent = elem.id;
-    
+    if (elem.id == correctAnswer) {
+      answerFeedbackEl.textContent = 'Correct! Current score: ' + (++user.score);
+      elem.setAttribute('style',
+    'display:block; color: blue;background:yellow; margin: auto; text-align: center;'
+    );
+     
+    }
+    else {
+      answerFeedbackEl.textContent = 'Sorry, wrong. Current score: ' + user.score;
+      elem.setAttribute('style',
+      'display:block; color: red;  margin: auto; text-align: center;'
+      );
+    }
+    return; // escape from event listener?
+       
   });
 }
 
@@ -105,7 +121,7 @@ function configureButton(elem){
 function nextQuestion(j) {
   
   var answerDivEl = document.querySelector('#answerdiv');
-
+  correctAnswer = qArr[j].solution;
   console.log('answerDivEl = ' + answerDivEl);
 
   // display the question
@@ -146,6 +162,9 @@ function nextQuestion(j) {
 // FUNCTION runGame()
 // builds 
 function runGame() {
+  // remove the start button
+  
+  startBtnEl.remove();
   //build the next question 
   var i = 0;
   nextQuestion(i);
@@ -162,6 +181,7 @@ var startBtnEl = document.querySelector('#start-btn');
 // text spans
 var timerEl = document.querySelector('#timeleft');
 var startPromptEl = document.querySelector('#start-prompt');
+var answerFeedbackEl = document.querySelector('#feedback');
 // var nextQuestionEL = document.querySelector('#next-question');
 
 // retrieve LAST high score and initials and display on screen
@@ -169,8 +189,12 @@ var startPromptEl = document.querySelector('#start-prompt');
 //******** LISTEN FOR START ************** */
 
 startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
-
-startBtnEl.addEventListener("click", startGame);
+answerFeedbackEl.textContent = '';
+startBtnEl.addEventListener("click", function () {
+  // remove the start button
+  startBtnEl.remove();
+  startGame()
+});
 
 // Game is over:
 // Notify user of score and ask if they want to save
