@@ -10,13 +10,12 @@
   <body >
     <header>
       <h1>JavaScript Coding Challenge</h1>
-      <div class="status-bar" class="game-panel">
+      <div class="status-bar">
         <!-- high score and initials -->
         <div class='high-score'>
-          <p><strong>High Score:</strong> <span id="high-score-initials"> </span> 
-            ' - ' 
-            <span id="high-score"></span></p>
-        </div>
+          <p><span id="highscore"> </span>
+            </p>
+            </div> 
         <!-- time left on clock-->
         <div class='timer'>
           <p><strong>Time Left:</strong> <span id="timeleft">30</span></p>
@@ -24,17 +23,15 @@
       </div> <!--status bar-->
     </header>
 
-    <main class="card" class="game-panel">
+    <section class="card">
       <div class="card-header">
         <p><span id="start-prompt">Click Start to Begin Quiz</span></p>
       </div>
-      <div class="card-body">
-        <div class="question">
-          <p><span id="next-question">default text</span></p>
-          <!--answers will be appended here-->
-        </div> <!--question-->
-      </div> <!--card-body-->
-    </main>
+      <div id="cardbody" class="card-body" >
+       <!-- append anwswer buttons here-->
+       
+      </div> 
+    </section>
 
     <footer class="card-footer" class="game-panel">
       <button id="start-btn" class="btn">Start</button>

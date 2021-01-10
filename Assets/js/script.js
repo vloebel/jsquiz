@@ -3,7 +3,7 @@ const TIMEPENALTY = 5; // penalty in seconds for wrong answer
 var penalty = false; // penalty flag 
 var user = { initials: '', score: 0 };
 
-var timeLeft = 8; // countdown varible
+var timeLeft = 5; // countdown varible
 var gameOver = false;
 
 // questions are in quiz-question.js
@@ -46,10 +46,10 @@ var gameOver = false;
 function startGame() {
  
   var gameClock = setInterval(function () {
-    timerEl.textContent = ' ' + timeLeft;
+    timerEl.textContent = ' ' + --timeLeft;
     console.log('time left: ' + timeLeft);
     //if global penalty is set, subtract extra time
-    --timeLeft;
+    
     if (penalty) {
       timeLeft -= TIMEPENALTY;
       penalty = false;
@@ -67,14 +67,52 @@ function startGame() {
 
 } 
 
-function runGame() {
 /*This code is supposed to run while the clock ticks */
+/* But nothing seems to make that work */
 
-  var i = 0; 
-for (i; i < 10; i++) console.log('i = ' + i);
+// Clear the screen
+// display the next question and response buttons
+// wait for user to click button
+// check whether answer was correct
+// display "correct" or "wrong" at bottom of quiz
+// if wrong, set penalty flag to deduct time from clock
+// if time is not up, advance to next question
 
-console.log('rungame OVER');
+
+function buildQuestion(j) {
+  
+  var answerDivEl = document.querySelector('#cardbody');
+
+  console.log('answerDivEl = ' + answerDivEl);
+
+  // display the question
+  startPromptEl.textContent = qArr[j].q;
+  console.log('startPromptEl.textContent is ' + startPromptEl.textContent);
+
+  // create and append answer buttons
+  var aEl = document.createElement('button');
+  aEl.textContent = qArr[j].a;
+  console.log('aEl = '+ aEl.textContent);
+  var bEl = document.createElement('button');
+  bEl.textContent = qArr[j].b;
+  var cEl = document.createElement('button');
+  cEl.textContent = qArr[j].c;
+  var dEl = document.createElement('button');
+  dEl.textContent = qArr[j].d;
+// append the buttons to the display
+  
+  answerDivEl.append (aEl, bEl, cEl, dEl);
 }
+
+function runGame() {
+  //build the next question 
+  var i = 0;
+  buildQuestion(i);
+}
+
+
+
+
 
 
 //******** ATTACH HTML ELEMENTS ************** */
@@ -85,20 +123,19 @@ var timerEl = document.querySelector('#timeleft');
 var startPromptEl = document.querySelector('#start-prompt');
 // var nextQuestionEL = document.querySelector('#next-question');
 
+// retrieve LAST high score and initials and display on screen
+
 //******** LISTEN FOR START ************** */
 
 startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
 
 startBtnEl.addEventListener("click", startGame);
 
+// Game is over:
+// Notify user of score and ask if they want to save
+// save user initials and score to local storage
 
 
-
-    // Output the score
-  
-    //  nextQuestionEL.textContent = (`Your score was ${currentScore}`);
-  
-    // ask for initials
  
 
 
