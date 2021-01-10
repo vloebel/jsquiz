@@ -1,10 +1,9 @@
-
+const TOTALTIME = 10;   // total time for game
 const TIMEPENALTY = 5; // penalty in seconds for wrong answer
 var penalty = false; // penalty flag 
 var user = { initials: '', score: 0 };
 
-//button number of correct answer for current question
-var correctAnswer=''; 
+var correctAnswer=''; //Button number of aQrr[i].solution
 
 var timeLeft = 5; // countdown varible
 var gameOver = false;
@@ -44,20 +43,26 @@ var gameOver = false;
     //output wrong and deduct time penalty//
 
 // end loop through questions
-
-
+//****************************************** 
+// FUNCTION startGame ()
+//****************************************** 
+// Start the clock
+// --for each tick, decrement time left
+// --subtract penalty, if any
+// --if timer <= 0 set gameOver flag
+// CALL runGame ()
+//******************************************
 function startGame() {
- 
+  timeLeft = TOTALTIME;
   var gameClock = setInterval(function () {
-    timerEl.textContent = ' ' + --timeLeft;
+    --timeLeft;
+    timerEl.textContent = ' ' + timeLeft;
     console.log('time left: ' + timeLeft);
-    //if global penalty is set, subtract extra time
-    
     if (penalty) {
       timeLeft -= TIMEPENALTY;
       penalty = false;
     }
-    // set flag if we've run out of time
+    // set flag if time is up
     // otherwise update clock on screen
     if (timeLeft <= 0) {
       gameOver = true;
@@ -68,10 +73,9 @@ function startGame() {
   
   runGame();
 
-} 
+} //startGame
 
-/*This code is supposed to run while the clock ticks */
-/* But nothing seems to make that work */
+
 
 // Clear the screen
 // display the next question and response buttons
@@ -130,8 +134,7 @@ function nextQuestion(j) {
   // create a button for each of 4 answers
   // call configureButton to style the buttons
   // and attach event listeners
-  // TBD? This might be possible in a single
-  // loop using template literals? for another day...
+  // TBD? Don't need to create new buttons each time...
   var opt1El = document.createElement('button');
   opt1El.textContent = qArr[j].opt1; 
   opt1El.id = '1';
@@ -160,14 +163,17 @@ function nextQuestion(j) {
 
 //**********************************
 // FUNCTION runGame()
-// builds 
+// builds the questions
 function runGame() {
   // remove the start button
-  
   startBtnEl.remove();
   //build the next question 
-  var i = 0;
-  nextQuestion(i);
+  for (var i = 0; i < qArr.length; i++) {
+    
+    nextQuestion(i);
+
+  }
+  
 }
 
 
@@ -182,7 +188,7 @@ var startBtnEl = document.querySelector('#start-btn');
 var timerEl = document.querySelector('#timeleft');
 var startPromptEl = document.querySelector('#start-prompt');
 var answerFeedbackEl = document.querySelector('#feedback');
-// var nextQuestionEL = document.querySelector('#next-question');
+
 
 // retrieve LAST high score and initials and display on screen
 
@@ -192,7 +198,6 @@ startPromptEl.textContent = 'Click Start to Begin Timed Quiz';
 answerFeedbackEl.textContent = '';
 startBtnEl.addEventListener("click", function () {
   // remove the start button
-  startBtnEl.remove();
   startGame()
 });
 
