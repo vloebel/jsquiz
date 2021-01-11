@@ -80,7 +80,7 @@ body {
   display: block;
   font-size: 1em;
   line-height: 1em;
-  margin: 4px;
+  margin: auto;
   padding: 4px, 10px;
   text-align: center;
   cursor: pointer;
