@@ -52,6 +52,7 @@ function nextQuestion() {
   // clear div and display the question
   answerDivEl.innerHTML = '';
   console.log('qIndex is ' + qIndex);
+  mainPromptEl.innerHTML = '';
   mainPromptEl.textContent = qArr[qIndex].q;
 
   // Create answer buttons  
