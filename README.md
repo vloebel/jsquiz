@@ -7,10 +7,10 @@
 
 **Modification History**  
 TBD: add retrieval of high score and save user initials to local storage
-*  Added fn to end game and display results
-*  Added CSS  to style generated buttons
-*  Made question fn recursive for multiple questions
-*  Added fn to build question & answer buttons, attach event listeners, and score answers
+* Added fn to end game and display results
+* Added CSS  to style generated buttons
+* Made question fn recursive for multiple questions
+* Added fn to build question & answer buttons, attach event listeners, and score answers
 * Initalized question object array, added Game timer
 * Set up HTML & basic CSS
 
