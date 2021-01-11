@@ -26,6 +26,7 @@ var currentScore = 0;
 function finishGame() {
   answerDivEl.innerHTML = '';
   console.log('finishing game');
+  gameOver = true;
   if (timesUp) mainPromptEl.textContent =
     `Time's Up. Your score is ${currentScore} out of ${qArr.length}`;
   else {
@@ -34,6 +35,7 @@ function finishGame() {
     
   }
 }
+
 
 //****************************************
 // FUNCTION nextQuestion (index) 
@@ -47,11 +49,15 @@ function finishGame() {
 function nextQuestion() {
   // increment question number
   qIndex++;
-  if (qIndex == qArr.length) finishGame();
+  console.log(`after increment qIndex is: ${qIndex} qArr.length is ${qArr.length}`)
+  if (qIndex >= qArr.length) {
+    gameOver = true;
+    finishGame();
+    return; 
+  }
 
   // clear div and display the question
   answerDivEl.innerHTML = '';
-  console.log('qIndex is ' + qIndex);
   mainPromptEl.innerHTML = '';
   mainPromptEl.textContent = qArr[qIndex].q;
 
@@ -61,19 +67,15 @@ function nextQuestion() {
   Button1El.setAttribute("class", "qbtn");
   Button1El.id = '1';
   Button1El.addEventListener("click" , function () {
-    if (qIndex == qArr.length) {
-      finishGame();
-    }
-    else if (Button1El.id == qArr[qIndex].solution) {
+    if (Button1El.id == qArr[qIndex].solution) {
       penalty = false;
       currentScore++;
       answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
     } else {
       penalty = true;
-      answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+      answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
     }
-      console.log(' clicked button 1 question ' + qIndex);
-      nextQuestion(); // call nextQ after done
+    nextQuestion(); // call nextQ after done
   });
 
   var Button2El = document.createElement('button');
@@ -81,18 +83,15 @@ function nextQuestion() {
   Button2El.id = '2';
   Button2El.setAttribute("class", "qbtn");
   Button2El.addEventListener("click" , function() { 
-    if (qIndex == qArr.length) {
-      finishGame();
-    } else if (Button2El.id == qArr[qIndex].solution) {
+    if (Button2El.id == qArr[qIndex].solution) {
     penalty = false;
     currentScore++;
     answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
   } else {
     penalty = true;
-    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+    answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
   }
-    console.log(' clicked button 2 question ' + qIndex);
-    nextQuestion(); // call nextQ after done
+    nextQuestion(); 
   });
 
   var Button3El = document.createElement('button');
@@ -100,18 +99,15 @@ function nextQuestion() {
   Button3El.id = '3';
   Button3El.setAttribute("class", "qbtn");
   Button3El.addEventListener("click" , function() {  
-    if (qIndex == qArr.length) {
-      finishGame();
-    } else if (Button3El.id == qArr[qIndex].solution) {
+  if (Button3El.id == qArr[qIndex].solution) {
     penalty = false;
     currentScore++;
     answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
   } else {
     penalty = true;
-    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+    answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
   }
-    console.log(' clicked button 3 question ' + qIndex);
-    nextQuestion(); // call nextQ after done
+    nextQuestion(); 
   });
   
   var Button4El = document.createElement('button'); 
@@ -119,18 +115,15 @@ function nextQuestion() {
   Button4El.setAttribute("class", "qbtn");
   Button4El.id = '4';
   Button4El.addEventListener("click" , function() {  
-    if (qIndex == qArr.length) {
-      finishGame();
-    } else if (Button4El.id == qArr[qIndex].solution) {
+  if (Button4El.id == qArr[qIndex].solution) {
     penalty = false;
     currentScore++;
     answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
   } else {
     penalty = true;
-    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+    answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
   }
-    console.log(' clicked button 4 question ' + qIndex);
-    nextQuestion(); // call nextQ after done
+    nextQuestion(); 
   });
   
 // Display question buttons in answer Div
@@ -195,6 +188,7 @@ function startGame() {
       clearInterval(gameClock);
       finishGame();
     } else if (gameOver) {
+      console.log('clearing interval gameOver');
         clearInterval(gameClock);
     }
 }, 1000);

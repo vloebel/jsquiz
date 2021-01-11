@@ -10,12 +10,12 @@ const qArr = [
     opt4: 'In a file named \'script\'',
     solution: '3'
   },
-  { q: 'What is the result of the following code: \n return(is_string("Type me"))',
-    opt1: 'Console output\: "Type me"',
-    opt2: 'True',
-    opt3: 'Boolean',
+  { q: 'What is the result of: (typeof (\'howdy\' === \'string\'))',
+    opt1: 'true',
+    opt2: 'false',
+    opt3: 'boolean',
     opt4: 'Syntax error',
-    solution: '2'
+    solution: '3'
   },
   
   { q: 'Assuming min < max, how do you generate a random integer between min and max (inclusive)',
@@ -31,12 +31,12 @@ const qArr = [
     opt2: 'array[length]',
     opt3: 'array[array.length]',
     opt4: 'array[array.length-1]',
-    asolution: '4'
+    solution: '4'
   },
   
-{ q: 'Which of the following is not a valid test?))',
+{ q: 'Which of the following is not a valid test?',
     opt1: 'if !Null',
-    opt2: 'if (apples & oranges)',
+    opt2: 'if (a & b)',
     opt3: 'if (!True)',
     opt4: 'if (a = b)',
     solution: '2'
