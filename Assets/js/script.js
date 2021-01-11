@@ -25,7 +25,8 @@ var currentScore = 0;
 
 function finishGame() {
   answerDivEl.innerHTML = '';
-  console.log('finishing game');
+  answerFeedbackEl.innerHTML = '';
+
   gameOver = true;
   if (timesUp) mainPromptEl.textContent =
     `Time's Up. Your score is ${currentScore} out of ${qArr.length}`;
@@ -49,7 +50,6 @@ function finishGame() {
 function nextQuestion() {
   // increment question number
   qIndex++;
-  console.log(`after increment qIndex is: ${qIndex} qArr.length is ${qArr.length}`)
   if (qIndex >= qArr.length) {
     gameOver = true;
     finishGame();
@@ -73,7 +73,7 @@ function nextQuestion() {
       answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
     } else {
       penalty = true;
-      answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
+      answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
     }
     nextQuestion(); // call nextQ after done
   });
@@ -89,7 +89,7 @@ function nextQuestion() {
     answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
   } else {
     penalty = true;
-    answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
+    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
   }
     nextQuestion(); 
   });
@@ -105,7 +105,7 @@ function nextQuestion() {
     answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
   } else {
     penalty = true;
-    answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
+    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
   }
     nextQuestion(); 
   });
@@ -121,7 +121,7 @@ function nextQuestion() {
     answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
   } else {
     penalty = true;
-    answerFeedbackEl.textContent = `Wrong. ${qArr[qIndex].solution} Your score is ${currentScore}`;
+    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
   }
     nextQuestion(); 
   });
@@ -133,7 +133,7 @@ function nextQuestion() {
 }
 
 //**********************************
-//FUNCTION getSavedScore
+//TO DO FUNCTION getSavedScore NOT CALLED 
 //retrieves saved user initials and score
 // from local storage (if any)
 // and displays
