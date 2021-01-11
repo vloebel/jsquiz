@@ -6,7 +6,7 @@ var user = { initials: '', score: 0 };
 var correctAnswer = ''; //Button number of qArr[i].solution
 var qIndex = -1; // index to qArr
 
-var timeLeft = 5; // countdown varible
+var timeLeft = TOTALTIME; // countdown varible
 var timesUp = false;
 var gameOver = false;
 var currentScore = 0;
