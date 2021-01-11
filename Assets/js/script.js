@@ -1,16 +1,18 @@
-const TOTALTIME = 10;   // total time for game
-const TIMEPENALTY = 5; // penalty in seconds for wrong answer
+const TOTALTIME = 30;   // total time for game
+const TIMEPENALTY = 2; // penalty in seconds for wrong answer
 var penalty = false; // penalty flag 
 var user = { initials: '', score: 0 };
 
-var correctAnswer=''; //Button number of aQrr[i].solution
+var correctAnswer = ''; //Button number of qArr[i].solution
+var qIndex = -1; // index to qArr
 
 var timeLeft = 5; // countdown varible
+var timesUp = false;
 var gameOver = false;
+var currentScore = 0;
 
-// questions are in quiz-question.js
 // each question is an object in an array
-// of the form:
+// in the file questions.js of the form:
 // const questions = [
 //   {
 //     q: 'Where is JavaScript code placed?',
@@ -18,146 +20,121 @@ var gameOver = false;
 //     b: 'inside the html <body> element',
 //     c: 'Inside a <script> tag',
 //     d: 'In a file named \'script\'',
-//     ans: 'c'
+//     solution: 'c'
 //   }]
 
-
-
-
-// Display next question and score answer
-
-// var questionText = document.querySelector("#nextQuestion")
-// for (const nextQ of questions) {
-//   //get question and options
-//   questionText.value = nextQ.q;
-//   optiona.value = nextQ.a;
-//   optionb.value = nextQ.b;
-//   optionc.value = nextQ.c;
-//   optiond.value = nextQ.d;
-  // wait for button press
-  
-  // test answer
-  // if (userAnswer == nextQ.ans)
-  // output correct and increment score //
-
-    //output wrong and deduct time penalty//
-
-// end loop through questions
-//****************************************** 
-// FUNCTION startGame ()
-//****************************************** 
-// Start the clock
-// --for each tick, decrement time left
-// --subtract penalty, if any
-// --if timer <= 0 set gameOver flag
-// CALL runGame ()
-//******************************************
-function startGame() {
-  timeLeft = TOTALTIME;
-  var gameClock = setInterval(function () {
-    --timeLeft;
-    timerEl.textContent = ' ' + timeLeft;
-    console.log('time left: ' + timeLeft);
-    if (penalty) {
-      timeLeft -= TIMEPENALTY;
-      penalty = false;
-    }
-    // set flag if time is up
-    // otherwise update clock on screen
-    if (timeLeft <= 0) {
-      gameOver = true;
-      clearInterval(gameClock);
-      console.log('timeLeft ran out');
-    }
-}, 1000);
-  
-  runGame();
-
-} //startGame
-
-
-
-// Clear the screen
-// display the next question and response buttons
-// wait for user to click button
-// check whether answer was correct
-// display "correct" or "wrong" at bottom of quiz
-// if wrong, set penalty flag to deduct time from clock
-// if time is not up, advance to next question
-
-//****************************************
-// FUNCTION configureButton (buttonElement) 
-// adds uniform style to the argument button
-// and attaches an event listener
-// WHEN one of the buttons is clicked
-// 
-//**************************************** 
-
-
-function configureButton(elem){
-  elem.setAttribute('style',
-    'display:block; color: black; margin: auto; text-align: center;'
-  );
-
-  elem.addEventListener("click", function() {                          
-    if (elem.id == correctAnswer) {
-      ++user.score;
-      answerFeedbackEl.textContent = 'Correct! Current score: ' + user.score;
-      elem.setAttribute('style',
-        'display:block; color: blue;background:yellow; margin: auto; text-align: center;'
-      );
-    } else {
-      penalty = true;
-      answerFeedbackEl.textContent = 'Sorry, wrong. Current score: ' + user.score;
-      elem.setAttribute('style',
-      'display:block; color: red;  margin: auto; text-align: center;'
-      );
-    }
+function finishGame() {
+  answerDivEl.innerHTML = '';
+  console.log('finishing game');
+  if (timesUp) mainPromptEl.textContent =
+    `Time's Up. Your score is ${currentScore} out of ${qArr.length}`;
+  else {
+    mainPromptEl.textContent =
+      `Congratulations! Your score is ${currentScore} out of ${qArr.length}`;
     
-  });  //addEventListener
-} // configure button
+  }
+}
 
 //****************************************
 // FUNCTION nextQuestion (index) 
 // Accepts the index to an array of question objects
 // Places each of the four answer strings on a button
-// calls configureButon to style button and 
-// attach an event listener
-// and then appends them to the DOM
+// attaches an event listener
+// and recursively calls the next question on each button
+
+// revision - remove passed index & drive questions here
 //**************************************** 
-function nextQuestion(j) {
+function nextQuestion() {
+  // increment question number
+  qIndex++;
+  if (qIndex == qArr.length) finishGame();
+
+  // clear div and display the question
+  answerDivEl.innerHTML = '';
+  console.log('qIndex is ' + qIndex);
+  mainPromptEl.textContent = qArr[qIndex].q;
+
+  // Create answer buttons  
+  var Button1El = document.createElement('button');
+  Button1El.textContent = qArr[qIndex].opt1;
+  Button1El.setAttribute("class", "qbtn");
+  Button1El.id = '1';
+  Button1El.addEventListener("click" , function () {
+    if (qIndex == qArr.length) {
+      finishGame();
+    }
+    else if (Button1El.id == qArr[qIndex].solution) {
+      penalty = false;
+      currentScore++;
+      answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
+    } else {
+      penalty = true;
+      answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+    }
+      console.log(' clicked button 1 question ' + qIndex);
+      nextQuestion(); // call nextQ after done
+  });
+
+  var Button2El = document.createElement('button');
+  Button2El.textContent = qArr[qIndex].opt2;
+  Button2El.id = '2';
+  Button2El.setAttribute("class", "qbtn");
+  Button2El.addEventListener("click" , function() { 
+    if (qIndex == qArr.length) {
+      finishGame();
+    } else if (Button2El.id == qArr[qIndex].solution) {
+    penalty = false;
+    currentScore++;
+    answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
+  } else {
+    penalty = true;
+    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+  }
+    console.log(' clicked button 2 question ' + qIndex);
+    nextQuestion(); // call nextQ after done
+  });
+
+  var Button3El = document.createElement('button');
+  Button3El.textContent = qArr[qIndex].opt3;
+  Button3El.id = '3';
+  Button3El.setAttribute("class", "qbtn");
+  Button3El.addEventListener("click" , function() {  
+    if (qIndex == qArr.length) {
+      finishGame();
+    } else if (Button3El.id == qArr[qIndex].solution) {
+    penalty = false;
+    currentScore++;
+    answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
+  } else {
+    penalty = true;
+    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+  }
+    console.log(' clicked button 3 question ' + qIndex);
+    nextQuestion(); // call nextQ after done
+  });
   
-  var answerDivEl = document.querySelector('#answerdiv');
-  correctAnswer = qArr[j].solution;
-
-  // display the question
-  mainPromptEl.textContent = qArr[j].q;
-
-  // attach question to each button
-  // call configureButton to style the buttons
-  // and wait for click
+  var Button4El = document.createElement('button'); 
+  Button4El.textContent = qArr[qIndex].opt4;
+  Button4El.setAttribute("class", "qbtn");
+  Button4El.id = '4';
+  Button4El.addEventListener("click" , function() {  
+    if (qIndex == qArr.length) {
+      finishGame();
+    } else if (Button4El.id == qArr[qIndex].solution) {
+    penalty = false;
+    currentScore++;
+    answerFeedbackEl.textContent = `Correct! Your score is ${currentScore}`;
+  } else {
+    penalty = true;
+    answerFeedbackEl.textContent = `Wrong. Your score is ${currentScore}`;
+  }
+    console.log(' clicked button 4 question ' + qIndex);
+    nextQuestion(); // call nextQ after done
+  });
   
-  opt1El.textContent = qArr[j].opt1; 
-  configureButton(opt1El);
-  
-  opt2El.textContent = qArr[j].opt2;
-  configureButton(opt2El);
-
-  opt3El.textContent = qArr[j].opt3;
-  configureButton(opt3El);
-
-  opt4El.textContent = qArr[j].opt4;
-  configureButton(opt4El);
-
 // Display question buttons in answer Div
-  answerDivEl.append(opt1El, opt2El, opt3El, opt4El);
+  answerDivEl.append(Button1El, Button2El, Button3El, Button4El);
 
-
-//Remove event listeners here? test with button 1
-opt1El.removeEventListener("click", function () {
-  console.log('removing event listner from button ' + opt1El.id);
-
-}); //removeEventListener from button that was clicked
 
 }
 
@@ -189,29 +166,41 @@ function saveScore() {
 
 
 }
- 
-//*************************** */
-// FUNCTION runGame()
-// builds the questions
-function runGame() {
-  // remove the start button
-  startBtnEl.remove();
-  // TO DO retrieve LAST saved score and initials 
-  // from local storage and display on screen
 
-
-  //ask the next question 
-  for (var i = 0; i < 1; i++) {
-    nextQuestion(i);
-    console.log('Back in the for loop');
-
-  }
+//****************************************** 
+// FUNCTION startGame ()
+//****************************************** 
+// Start the clock
+// --for each tick, decrement time left
+// --subtract penalty, if any
+// --if timer <= 0 call finishGame()
+// CALL nextQuestion ()
+//******************************************
+function startGame() {
+  timeLeft = TOTALTIME;
+  timesUp = false;
   
- 
-}
+  var gameClock = setInterval(function () {
+    --timeLeft;
+    timerEl.textContent = ' ' + timeLeft;
+    if (penalty) {
+      timeLeft -= TIMEPENALTY;
+      penalty = false;
+    }
+    // set flag if time is up
+    // otherwise update clock on screen
+    if (timeLeft <= 0) {
+      timesUp = true;
+      clearInterval(gameClock);
+      finishGame();
+    } else if (gameOver) {
+        clearInterval(gameClock);
+    }
+}, 1000);
+  
+  nextQuestion();
 
-
-
+} //startGame ********************************
 
 
 // ***********************************************
@@ -226,22 +215,7 @@ var savedScoreEl = document.querySelector('#savedscore');
 var timerEl = document.querySelector('#timeleft');
 var mainPromptEl = document.querySelector('#start-prompt');
 var answerFeedbackEl = document.querySelector('#feedback');
-
-// Create answer buttons for quiz but don't display yet
-var opt1El = document.createElement('button');
-var opt2El = document.createElement('button');
-var opt3El = document.createElement('button');
-var opt4El = document.createElement('button');
-
-//questions will appear on buttons
-// Button id indicates which answer is picked
-opt1El.id = '1';
-opt2El.id = '2';
-opt3El.id = '3';
-opt4El.id = '4';
-
-
-
+var answerDivEl = document.querySelector('#answerdiv');
 
 
 //******** LISTEN FOR START ************** */
@@ -249,11 +223,8 @@ opt4El.id = '4';
 mainPromptEl.textContent = 'Click Start to Begin Timed Quiz';
 answerFeedbackEl.textContent = '';
 startBtnEl.addEventListener("click", function () {
-  startGame()
+  startBtnEl.remove();
+  startGame();
 });
-
-// anything else here will run before the quiz, so....
- 
-
 
 

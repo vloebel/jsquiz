@@ -71,6 +71,22 @@ body {
   cursor: pointer;
 }
 
+.qbtn {
+  background-color:var(--background-color2);
+  border-radius: 5%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
+    0px;
+  color: hsl(0, 0%, 100%);
+  display: block;
+  font-size: 1em;
+  line-height: 1em;
+  margin: 4px;
+  padding: 4px, 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+
 
 /*adjust button size to screen */
 @media (max-width: 690px) {

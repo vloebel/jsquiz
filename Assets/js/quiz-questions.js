@@ -31,12 +31,14 @@ const qArr = [
     opt2: 'array[length]',
     opt3: 'array[array.length]',
     opt4: 'array[array.length-1]',
-    ans: '4'
-},
+    asolution: '4'
+  },
+  
 { q: 'Which of the following is not a valid test?))',
     opt1: 'if !Null',
     opt2: 'if (apples & oranges)',
     opt3: 'if (!True)',
     opt4: 'if (a = b)',
+    solution: '2'
   }]
 
